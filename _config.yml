@@ -11,4 +11,3 @@ github_username:  arghya88
 # Build settings
 markdown: kramdown
 highlighter: pygments
-highlighter: rouge
