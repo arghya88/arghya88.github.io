@@ -1,7 +1,7 @@
 ---
 layout: post
 title: CoffeeShop Application
-date: {}
+date: 2015-06-01 21:44:14
 categories: Java
 published: true
 ---
