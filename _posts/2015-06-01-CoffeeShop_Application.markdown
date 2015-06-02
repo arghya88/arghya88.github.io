@@ -9,7 +9,7 @@ published: true
 
 This is a Demo coffee shop Application using best of breed technologies as in MongoDB from NOSQL world,Angular JS from front end world and Spring from Java framework world.
 
-### The scope of this application
+### Scope of this application
 
 1. Find the  coffee shop nearest to the user's location.
 2. Place an order of different varities of coffee in that particular coffeshop
