@@ -15,3 +15,4 @@ highlighter: pygments
 prose:
   rooturl: '_posts'
   siteurl: 'http://arghya88.github.io'
+
