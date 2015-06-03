@@ -37,7 +37,7 @@ The frontend of this app is developed with Angular JS where I have used $resourc
 
 Here is how I have used resource module of Angular JS to call a rest backend:
 
-{% highlight javascript %}
+{% highlight JavaScript %}
 coffeeApp.controller('CoffeeShopController', function ($scope, $window, CoffeeShopLocator) {
     $scope.findCoffeeShopNearestToMe = function () {
         window.navigator.geolocation.getCurrentPosition(function (position) {
@@ -67,11 +67,9 @@ Spring data mongodb provided template based abstraction for the data layer and m
 
 Here is how I have used MVC controller to handle the request to the rest endpoint from the angular JS UI.This controller makes a call to a method in CoffeeRepository to get the nearest coffeeshop from mongoDB using geo special indexing.The actual query is derived by spring data mongodb at runtime.
 
-{% highlight java %}
+{% highlight Java %}
 @RequestMapping(value = "nearest", method = RequestMethod.GET)
 	public Object getNearest(@RequestParam("latitude") double latitude,@RequestParam("longitude") double longitude) throws Exception{
-
-
 		Point point = new Point(longitude,latitude);
 		CoffeeShop  coffeeShop=coffeeshoprepo.findByAddressLocationNear(point);
 		return coffeeShop;
