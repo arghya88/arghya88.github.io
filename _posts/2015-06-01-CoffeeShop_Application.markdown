@@ -35,9 +35,44 @@ Since the application requires search based on geolocation MongoDB fits very wel
 
 The frontend of this app is developed with Angular JS where I have used $resource module to interact with backend controller developed using spring MVC rest.
 
+Here is how I have used resource module of Angular JS to call a rest backend:
+
+coffeeApp.controller('CoffeeShopController', function ($scope, $window, CoffeeShopLocator) {
+    $scope.findCoffeeShopNearestToMe = function () {
+        window.navigator.geolocation.getCurrentPosition(function (position) {
+            $scope.getCoffeeShopAt(position.coords.latitude, position.coords.longitude)
+        }, null);
+    };
+    $scope.getCoffeeShopAt = function (latitude, longitude) {
+        CoffeeShopLocator.get({latitude: latitude, longitude: longitude}).$promise
+            .then(
+            function (value) {
+                $scope.nearestCoffeeShop = value;
+            })
+            .catch(
+            function (value) {
+                //default coffee shop
+                $scope.getCoffeeShopAt(12.9350891,77.6134262);
+            });
+    };
+});
+
 **Spring Data MongoDB**
 
-Spring data mongodb provided template based abstraction for the data layer and made it simpler to query mongodb with GeoJSON just by using derived query mechanism of spring data.
+Spring data mongodb provided template based abstraction for the data layer and made it simpler to query mongodb with GeoJSON just by using derived query mechanism of spring data.Latest spring data mongoDB version 1.7 supports GeoJSON.Refer to [MongoDB GeoJSON](http://docs.mongodb.org/manual/reference/geojson/)
+
+**Spring MVC REST**
+
+Here is how I have used MVC controller to handle the request to the rest endpoint from the angular JS UI.This controller makes a call to a method in CoffeeRepository to get the nearest coffeeshop from mongoDB using geo special indexing.The actual query is derived by spring data mongodb at runtime.
+
+@RequestMapping(value = "nearest", method = RequestMethod.GET)
+	public Object getNearest(@RequestParam("latitude") double latitude,@RequestParam("longitude") double longitude) throws Exception{
+
+
+		Point point = new Point(longitude,latitude);
+		CoffeeShop  coffeeShop=coffeeshoprepo.findByAddressLocationNear(point);
+		return coffeeShop;
+	}
 
 The code for this app is available in a github repo [https://github.com/arghya88/CafelitoSpring](https://github.com/arghya88/CafelitoSpring)
 
