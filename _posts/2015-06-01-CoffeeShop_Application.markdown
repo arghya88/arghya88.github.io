@@ -38,6 +38,11 @@ The frontend of this app is developed with Angular JS where I have used $resourc
 Here is how I have used resource module of Angular JS to call a rest backend:
 
 {% highlight JavaScript %}
+coffeeApp.factory('CoffeeShopLocator', function ($resource) {
+    return $resource('/coffeeshop/nearest',
+        {latitude: '@latitude', longitude: '@longitude'}, {});
+});
+
 coffeeApp.controller('CoffeeShopController', function ($scope, $window, CoffeeShopLocator) {
     $scope.findCoffeeShopNearestToMe = function () {
         window.navigator.geolocation.getCurrentPosition(function (position) {
