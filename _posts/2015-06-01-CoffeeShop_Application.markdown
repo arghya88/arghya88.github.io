@@ -90,6 +90,24 @@ public static List<CoffeeShop> readStores() throws Exception {
 **MongoDB**
 
 Since the application requires search based on geolocation MongoDB fits very well because it inharently supports geo special index.Also  placing an order would create an artifact which correctly fits into a document structure.
+Document structure of  location information of coffeeshops are stored as below:
+
+{% highlight java %}
+{
+        "_id" : ObjectId("556ae5ec745e9d015a94e0d7"),
+        "_class" : "cafelito.model.CoffeeShop",
+        "address" : {
+                "street" : "Real Square Building, Opp Raheja Arcade, No.115,Koramangala,IndustLayout,7thBlock",
+                "city" : "Bengaluru",
+                "zip" : "560095",
+                "location" : {
+                        "x" : 77.61342621,
+                        "y" : 12.93508911
+                }
+        },
+        "name" : "Koramangala"
+}
+{% endhighlight %}
 
 **Angular JS and Twitter Bootstrap**
 
