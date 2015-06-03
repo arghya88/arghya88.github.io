@@ -128,6 +128,16 @@ coffeeApp.controller('CoffeeShopController', function ($scope, $window, CoffeeSh
 
 Spring data mongodb provided template based abstraction for the data layer and made it simpler to query mongodb with GeoJSON just by using derived query mechanism of spring data.Latest spring data mongoDB version 1.7 supports GeoJSON.Refer to [MongoDB GeoJSON](http://docs.mongodb.org/manual/reference/geojson/)
 
+I have used spring data mongoDB as below:
+
+{% highlight java %}
+public interface CoffeeRepository extends MongoRepository<CoffeeShop,String> {
+	
+	CoffeeShop findByAddressLocationNear(Point point);
+
+}
+{% endhighlight %}
+
 **Spring MVC REST**
 
 Here is how I have used MVC controller to handle the request to the rest endpoint from the angular JS UI.This controller makes a call to a method in CoffeeRepository to get the nearest coffeeshop from mongoDB using geo special indexing.The actual query is derived by spring data mongodb at runtime.
