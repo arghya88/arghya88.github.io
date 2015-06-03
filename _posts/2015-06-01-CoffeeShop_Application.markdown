@@ -81,7 +81,9 @@ Here is how I have used MVC controller to handle the request to the rest endpoin
 	}
 {% endhighlight %}
 
-The code for this app is available in a github repo [https://github.com/arghya88/CafelitoSpring](https://github.com/arghya88/CafelitoSpring)
+The code for this app is available in my github repo [Github Link to Code](https://github.com/arghya88/CafelitoSpring)
+
+You can fork the repo and play with it.
 
 
 
