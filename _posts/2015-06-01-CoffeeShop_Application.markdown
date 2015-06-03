@@ -26,6 +26,66 @@ I have used spring boot to quickly bootstrap the spring application.Spring boot 
 **Spring Batch** 
 
 Spring batch has been used to load information into MongoDB,about starbucks coffeeshops located accross the world from a csv file downloaded from [starbucks location data](https://opendata.socrata.com/Business/All-Starbucks-Locations-in-the-World-Heat-Map/nt5z-pju4).Information includes store id ,storename,street,latitude,longitude etc.
+Here is how I have used spring batch to load data into MongoDB:
+{% highlight java %}
+public static List<CoffeeShop> readStores() throws Exception {
+
+		ClassPathResource resource = new ClassPathResource("starbucks.csv");
+		Scanner scanner = new Scanner(resource.getInputStream());
+		String line = scanner.nextLine();
+		scanner.close();
+
+		FlatFileItemReader<CoffeeShop> itemReader = new FlatFileItemReader<CoffeeShop>();
+		itemReader.setResource(resource);
+
+		// DelimitedLineTokenizer defaults to comma as its delimiter
+		DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
+		tokenizer.setNames(line.split(","));
+		tokenizer.setStrict(false);
+
+		DefaultLineMapper<CoffeeShop> lineMapper = new DefaultLineMapper<CoffeeShop>();
+		lineMapper.setLineTokenizer(tokenizer);
+		lineMapper.setFieldSetMapper(StoreFieldSetMapper.INSTANCE);
+		itemReader.setLineMapper(lineMapper);
+		itemReader.setRecordSeparatorPolicy(new DefaultRecordSeparatorPolicy());
+		itemReader.setLinesToSkip(1);
+		itemReader.open(new ExecutionContext());
+
+		List<CoffeeShop> shops = new ArrayList<>();
+		CoffeeShop shop = null;
+
+		do {
+
+			shop = itemReader.read();
+
+			if (shop != null) {
+				shops.add(shop);
+			}
+
+		} while (shop != null);
+
+		return shops;
+	}
+
+	private static enum StoreFieldSetMapper implements FieldSetMapper<CoffeeShop> {
+
+		INSTANCE;
+
+		/* 
+		 * (non-Javadoc)
+		 * @see org.springframework.batch.item.file.mapping.FieldSetMapper#mapFieldSet(org.springframework.batch.item.file.transform.FieldSet)
+		 */
+		@Override
+		public CoffeeShop mapFieldSet(FieldSet fields) throws BindException {
+
+			Point location = new Point(fields.readDouble("Longitude"), fields.readDouble("Latitude"));
+			Address address = new Address(fields.readString("Street Combined"), fields.readString("City"),
+					fields.readString("Postal Code"), location);
+
+			return new CoffeeShop(fields.readString("Name"), address);
+		}
+	}
+{% endhighlight %}
 
 **MongoDB**
 
