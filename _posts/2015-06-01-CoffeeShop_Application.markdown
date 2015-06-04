@@ -142,6 +142,10 @@ coffeeApp.controller('CoffeeShopController', function ($scope, $window, CoffeeSh
 });
 {% endhighlight %}
 
+**HTML 5**
+
+HTML 5 has support for tracking uses location.I have used this API to aceess users current location
+
 **Spring Data MongoDB**
 
 Spring data mongodb provided template based abstraction for the data layer and made it simpler to query mongodb with GeoJSON just by using derived query mechanism of spring data.Latest spring data mongoDB version 1.7 supports GeoJSON.Refer to [MongoDB GeoJSON](http://docs.mongodb.org/manual/reference/geojson/) for more information.
