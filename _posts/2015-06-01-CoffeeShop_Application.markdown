@@ -144,7 +144,18 @@ coffeeApp.controller('CoffeeShopController', function ($scope, $window, CoffeeSh
 
 **HTML 5**
 
-HTML 5 has support for tracking uses location.I have used this API to aceess users current location
+HTML 5 has support for tracking users location.I have used this API to aceess users current location:
+
+{% highlight JavaScript %}
+
+$scope.findCoffeeShopNearestToMe = function () {
+        window.navigator.geolocation.getCurrentPosition(function (position) {
+            $scope.getCoffeeShopAt(position.coords.latitude, position.coords.longitude)
+        }, null);
+    };
+    
+{% endhighlight %}
+
 
 **Spring Data MongoDB**
 
